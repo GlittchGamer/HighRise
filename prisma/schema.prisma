@@ -1,0 +1,753 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  identifier String       @unique
+  priority   Int          @default(0)
+  groups     String[]
+  name       String
+  joined     DateTime     @default(now())
+  account    Int          @unique @default(autoincrement())
+  tokens     String[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime?    @default(now())
+  Characters Characters[]
+
+  @@index([account]) // Index on owner
+}
+
+model Characters {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  User              Int
+  SID               Int      @unique @default(autoincrement())
+  First             String
+  Last              String
+  Gender            Int
+  New               Boolean  @default(true)
+  Origin            Json
+  Apps              Json     @default("{}")
+  Wardrobe          Json     @default("[]")
+  DOB               BigInt
+  Cash              Int      @default(0)
+  LastPlayed        DateTime @default(now())
+  Jobs              Json     @default("[]")
+  Apartment         Int      @default(1)
+  PhoneSettings     Json     @default("{}")
+  Phone             String
+  LaptopApps        Json     @default("{}")
+  LaptopSettings    Json     @default("{}")
+  LaptopPermissions Json     @default("{}")
+  Crypto            Json     @default("{}")
+  Licenses          Json     @default("{}")
+  Alias             Json     @default("{}")
+  PhonePermissions  Json     @default("{}")
+  Addiction         Json     @default("{}")
+  Animations        Json     @default("{}")
+  Armor             Int      @default(0)
+  BankAccount       Int?
+  CryptoWallet      String?
+  HP                Int      @default(200)
+  InventorySettings Json     @default("{}")
+  States            Json     @default("{}")
+  Callsign          Int?
+  Mugshot           String?
+  MDTHistory        Json     @default("{}")
+  MDTSuspension     Json     @default("{}")
+  MDTSystemAdmin    Boolean  @default(false)
+  Qualifications    Json     @default("{}")
+  LastClockOn       Json     @default("{}")
+  Salary            Json     @default("{}")
+  TimeClockedOn     Json     @default("{}")
+  Reputations       Json     @default("{}")
+  GangChain         Json     @default("{}")
+  Bio               String?
+  ICU               Json     @default("{}")
+  Jailed            Json     @default("{}")
+  Status            Json     @default("{}")
+  Parole            Json     @default("{}")
+  LSUNDGBan         Json     @default("{}")
+  Deleted           Boolean  @default(false)
+  Users             Users    @relation(fields: [User], references: [account])
+  Peds              Peds[]
+}
+
+model BankAccounts {
+  id           Int                       @id @default(autoincrement())
+  account      Int                       @unique
+  type         String
+  owner        String
+  balance      Int                       @default(0)
+  name         String
+  Transactions BankAccountTransaction[]
+  Permissions  BankAccountsPermissions[]
+}
+
+model BankAccountsPermissions {
+  id             Int          @id @default(autoincrement())
+  account        Int
+  type           Int
+  jointOwner     String?      @db.VarChar(255)
+  job            String?      @db.VarChar(255)
+  workplace      String?      @db.VarChar(255)
+  jobPermissions String?      @db.VarChar(1024)
+  BankAccounts   BankAccounts @relation(fields: [account], references: [account])
+
+  @@index([job])
+  @@index([workplace])
+  @@index([jointOwner])
+  @@index([account])
+}
+
+model BankAccountTransaction {
+  id           Int          @id @default(autoincrement())
+  type         String
+  account      Int
+  amount       Int          @default(0)
+  timestamp    DateTime     @default(now())
+  title        String       @default("")
+  description  String       @default("")
+  data         String?      @db.VarChar(1024)
+  BankAccounts BankAccounts @relation(fields: [account], references: [account])
+
+  @@index([account])
+}
+
+model Bans {
+  id         Int      @id @default(autoincrement())
+  account    String   @default("0")
+  identifier String?
+  expires    DateTime
+  reason     String?
+  issuer     String?
+  active     Boolean  @default(true)
+  started    DateTime @default(now())
+  tokens     String[]
+
+  @@index([id], name: "PRIMARY")
+  @@map("bans")
+}
+
+model BenchSchematics {
+  bench     String @unique
+  schematic String
+
+  @@id([bench, schematic]) // Composite primary key if needed
+  @@index([bench]) // Index on the bench field
+}
+
+model Billboards {
+  id           Int    @id @default(autoincrement())
+  billboardId  String @unique
+  billboardUrl String
+
+  @@index([billboardId])
+}
+
+model BusinessDocuments {
+  id      Int      @id @default(autoincrement())
+  job     String
+  author  Json?
+  report  Json?
+  title   String?
+  notes   String?
+  history Json?
+  pinned  Boolean? @default(false)
+
+  @@map("business_documents")
+}
+
+model BusinessNotices {
+  id          Int      @id @default(autoincrement())
+  job         String?
+  author      Json?
+  description String?
+  title       String?
+  date        DateTime
+
+  @@map("business_notices")
+}
+
+model BusinessReceipts {
+  id           Int     @id @default(autoincrement())
+  job          String?
+  customerName String?
+  author       Json?
+  content      Json?
+  lastUpdated  Json?
+  history      Json?
+
+  @@index([id])
+  @@map("business_receipts")
+}
+
+model BusinessTvs {
+  id   Int    @id @default(autoincrement())
+  tv   Int    @unique
+  link String
+
+  @@index([tv])
+}
+
+model CasinoBigwins {
+  ID       Int     @id @default(autoincrement())
+  Type     String?
+  Time     Int?
+  SID      String?
+  First    String?
+  Last     String?
+  Prize    Int?
+  MetaData Json
+}
+
+model CasinoConfig {
+  id   Int     @id @default(autoincrement())
+  key  String? @unique @db.VarChar(255)
+  data Json
+}
+
+model CasinoStatistics {
+  SID                  String    @id
+  TotalAmountWon       Int?      @default(0)
+  TotalAmountLost      Int?      @default(0)
+  AmountWon_blackjack  Int?      @default(0)
+  AmountLost_blackjack Int?      @default(0)
+  AmountWon_roulette   Int?      @default(0)
+  AmountLost_roulette  Int?      @default(0)
+  AmountWon_slots      Int?      @default(0)
+  AmountLost_slots     Int?      @default(0)
+  LastUpdated          DateTime? @default(now()) @updatedAt
+}
+
+model CharacterContacts {
+  id       Int     @id @default(autoincrement())
+  sid      Int
+  number   String
+  name     String
+  avatar   String?
+  color    String?
+  favorite Boolean @default(false)
+}
+
+model CharacterDocuments {
+  id         Int     @id @default(autoincrement())
+  owner      String?
+  time       Int?
+  title      String?
+  content    String?
+  sharedWith String?
+  sharedBy   String?
+  signed     String?
+}
+
+model CharacterEmails {
+  id      Int      @id @default(autoincrement())
+  owner   String?  @db.VarChar(255)
+  sender  String?  @db.VarChar(255)
+  time    BigInt?
+  subject String?
+  body    String?
+  unread  Boolean?
+  flags   Json
+}
+
+model CharacterParole {
+  SID      Int      @id
+  end      DateTime
+  total    Int      @default(0)
+  parole   Int      @default(0)
+  sentence Int      @default(0)
+  fine     Int      @default(0)
+}
+
+model CharacterPhotos {
+  id        Int      @id @default(autoincrement())
+  sid       Int
+  time      DateTime @default(now())
+  image_url String
+}
+
+model CraftingCooldowns {
+  bench   String @id
+  id      String
+  expires BigInt
+}
+
+model DealerData {
+  Id         Int    @id @default(autoincrement())
+  dealership String
+  data       Json
+}
+
+model DealerRecords {
+  id               Int       @id @default(autoincrement())
+  dealership       String
+  seller_first     String?
+  seller_last      String?
+  buyer_first      String?
+  buyer_last       String?
+  vehicle_make     String?
+  vehicle_model    String?
+  vehicle_category String?
+  time             DateTime? @default(now())
+}
+
+model DealerRecordsBuybacks {
+  id               Int       @id @default(autoincrement())
+  dealership       String
+  seller_first     String?
+  seller_last      String?
+  buyer_first      String?
+  buyer_last       String?
+  vehicle_make     String?
+  vehicle_model    String?
+  vehicle_category String?
+  time             DateTime? @default(now())
+}
+
+model DealerShowrooms {
+  Id         Int    @id @default(autoincrement())
+  dealership String
+  showroom   Json
+}
+
+model DealerStock {
+  Id           Int    @id @default(autoincrement())
+  dealership   String
+  vehicle      String
+  modelType    String
+  data         Json
+  quantity     Int
+  lastStocked  String
+  lastPurchase BigInt
+}
+
+model Defaults {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  collection String?
+  date       DateTime?
+}
+
+model EntityTypes {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+}
+
+model Firearms {
+  police_id    Int      @id @default(autoincrement())
+  serial       String
+  scratched    Boolean  @default(false)
+  purchased    DateTime @default(now())
+  model        String
+  item         String
+  owner_sid    Int?
+  owner_name   String?
+  police_filed Boolean  @default(false)
+}
+
+model FirearmsFlags {
+  id              Int    @id
+  serial          String
+  title           String
+  description     String
+  author_sid      Int?
+  author_first    String
+  author_last     String
+  author_callsign String
+}
+
+model FirearmsProjectiles {
+  Id           String @id
+  WeaponSerial String
+  Coords       String
+  AmmoType     String
+}
+
+model Inventory {
+  id           Int     @id @default(autoincrement())
+  name         String
+  slot         Int
+  item_id      String
+  quality      Int
+  information  Json
+  dropped      Boolean @default(false)
+  creationDate BigInt  @default(0)
+  expiryDate   BigInt  @default(-1)
+}
+
+model InventoryShopLogs {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now())
+  inventory String
+  item      String
+  count     Int
+  itemId    BigInt
+  buyer     Int      @default(0)
+  metadata  Json
+}
+
+model IrcChannels {
+  id        Int    @id @default(autoincrement())
+  slug      String
+  joined    BigInt
+  character String
+}
+
+model IrcMessages {
+  id      Int    @id @default(autoincrement())
+  from    String
+  channel String
+  message String
+  time    BigInt
+}
+
+model Jobs {
+  id          Int    @id @default(autoincrement())
+  Id          String
+  Name        String
+  Type        String
+  Workplaces  Json
+  Grades      Json
+  Salary      Int?
+  SalaryTier  Int?
+  LastUpdated String
+  Owner       String
+}
+
+model Loans {
+  id                  Int      @id @default(autoincrement())
+  SID                 Int
+  AssetIdentifier     String
+  Type                String
+  Remaining           Int
+  Defaulted           Boolean
+  InterestRate        Int
+  Total               Int
+  Paid                Int
+  PaidPayments        Int
+  DownPayment         Int
+  MissablePayments    Int
+  MissedPayments      Int
+  TotalPayments       Int
+  TotalMissedPayments Int
+  NextPayment         DateTime
+  LastPayment         DateTime
+  LastMissedPayment   DateTime
+  Creation            DateTime
+}
+
+model LoansCreditScores {
+  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  SID   Int
+  Score Int
+}
+
+model Locations {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  Coords  Json
+  Heading Int?
+  Type    String
+  Name    String
+  default Boolean
+}
+
+model Logs {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  insertId  Int       @default(autoincrement())
+  level     String
+  component String
+  log       String
+  data      String
+  date      DateTime?
+}
+
+model MdtCharges {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  creator     Int
+  fine        Int
+  jail        Int
+  points      Int
+}
+
+model MdtLibrary {
+  id        Int    @id @default(autoincrement())
+  label     String
+  link      String
+  job       String
+  workplace String
+}
+
+model MdtNotices {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  author      String
+  restricted  String
+  created     DateTime
+  creator     Int
+}
+
+model MdtReports {
+  id              Int      @id @default(autoincrement())
+  type            Int
+  title           String
+  notes           String
+  creatorSID      Int
+  creatorName     String
+  creatorCallsign String
+  allowAttorney   Boolean
+  created         DateTime
+}
+
+model MdtReportsEvidence {
+  id     Int    @id @default(autoincrement())
+  report String
+  value  String
+  type   Int
+  label  String
+}
+
+model MdtReportsPeople {
+  id          Int     @id @default(autoincrement())
+  report      String?
+  type        String?
+  SID         Int?
+  First       String?
+  Last        String?
+  Callsign    Int?
+  charges     String?
+  plea        String?
+  Licenses    String?
+  sentenced   Boolean @default(false)
+  sentencedAt BigInt?
+  parole      Int?
+  warrant     Boolean @default(false)
+  jail        Int?
+  reduction   String?
+  revoked     String?
+  doc         Boolean @default(false)
+  expunged    Boolean @default(false)
+  points      Int?
+  fine        Int?
+}
+
+model MdtWarrants {
+  id              Int      @id @default(autoincrement())
+  title           String?
+  creatorSID      Int?
+  creatorName     String?
+  creatorCallsign String?
+  state           String?
+  report          String?
+  suspect         String?
+  notes           String?
+  issued          Int?
+  expires         DateTime @default(now())
+}
+
+model MethTables {
+  id          BigInt   @id @default(autoincrement())
+  tier        Int      @default(1)
+  created     DateTime
+  cooldown    BigInt
+  recipe      String
+  active_cook String
+}
+
+model Peds {
+  id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  char       String      @unique @db.Uuid
+  ped        Json
+  Characters Characters? @relation(fields: [char], references: [id])
+
+  @@index([char])
+}
+
+model PhoneCalls {
+  id          Int      @id @default(autoincrement())
+  owner       String?  @db.VarChar(255)
+  number      String?  @db.VarChar(255)
+  time        BigInt?  @db.BigInt
+  duration    Int?
+  method      Boolean?
+  limited     Boolean?
+  anonymous   Boolean?
+  decryptable Boolean?
+  unread      Boolean?
+  deleted     Boolean  @default(false)
+}
+
+model PhoneMessages {
+  id      Int      @id @default(autoincrement())
+  owner   String?
+  number  String?
+  message String?
+  time    BigInt?
+  method  Int?
+  unread  Boolean?
+  deleted Boolean  @default(false)
+}
+
+model PlacedMethTables {
+  table_id Int     @id
+  owner    BigInt?
+  placed   BigInt
+  expires  BigInt
+  coords   String
+  heading  Float   @default(0)
+}
+
+model PlacedProps {
+  id            Int      @id @default(autoincrement())
+  model         String   @default("") @db.VarChar(255)
+  coords        String   @db.VarChar(255)
+  heading       Float    @default(0)
+  created       DateTime @default(now())
+  creator       BigInt   @db.BigInt
+  is_frozen     Boolean  @default(false)
+  is_enabled    Boolean  @default(true)
+  type          Int      @default(0)
+  name_override String?  @db.VarChar(64)
+}
+
+model Properties {
+  id             Int      @id @default(autoincrement())
+  type           String   @db.VarChar(50)
+  label          String   @db.VarChar(255)
+  price          Int      @default(0)
+  sold           Boolean  @default(false)
+  owner          String?
+  location       Json
+  upgrades       Json
+  soldAt         String?
+  data           String?
+  foreClosed     Boolean?
+  keys           String?
+  foreclosedTime Int?
+}
+
+model PropertiesFurniture {
+  property    Int    @id
+  furniture   Json
+  updatedTime Int
+  updatedBy   String @db.VarChar(255)
+}
+
+model Roles {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  Permission Json
+  Queue      Json
+  Abv        String?
+  Name       String?
+}
+
+model Scenes {
+  id       Int      @id @default(autoincrement())
+  coords   String
+  length   Int?
+  expires  BigInt?
+  staff    Boolean?
+  distance Float?
+  route    Int?
+}
+
+model Sequence {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  current Int?
+  key     String?
+}
+
+model StorageUnits {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  label        String?
+  owner        Int?      @default(-1)
+  level        String?
+  location     String?
+  managedBy    Int?
+  lastAccessed DateTime?
+  passcode     String?
+}
+
+model StoreBankAccounts {
+  id      Int @id @default(autoincrement())
+  Shop    Int
+  Account Int
+}
+
+model Tracks {
+  id          Int     @id @default(autoincrement())
+  Name        String?
+  Distance    String?
+  Type        String?
+  Checkpoints Json
+  Fastest     Json
+  History     Json
+}
+
+model TracksPd {
+  id          String  @id @default(uuid())
+  Name        String?
+  Distance    String?
+  Type        String?
+  Checkpoints Json
+  Fastest     Json
+  History     Json
+}
+
+model Vehicles {
+  id               Int      @id @default(autoincrement())
+  VIN              String   @unique
+  Type             Int?
+  Vehicle          Int?
+  RegisteredPlate  String
+  FakePlate        Boolean  @default(false)
+  Fuel             Int?
+  Owner            Json
+  Storage          Json
+  Make             String?
+  Model            String?
+  Class            String?
+  Value            Int?
+  FirstSpawn       Boolean?
+  Properties       Json
+  RegistrationDate String?
+  Mileage          Int?
+  DirtLevel        Float?
+  Damage           Json?
+  DamagedParts     Json?
+  Flags            Json?
+  Strikes          Json?
+  GovAssigned      Boolean? @default(false)
+  Polish           Json?
+  Harness          Int?
+  Nitrous          Int?
+  NeonsDisabled    Boolean? @default(false)
+  FakePlateData    Json?
+  LastSave         BigInt?
+}
+
+model Weed {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isMale   Boolean @default(false)
+  location Json
+  growth   Int     @default(0)
+  output   Int     @default(1)
+  material String
+  planted  String
+  water    Float   @default(100)
+}
