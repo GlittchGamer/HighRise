@@ -1,0 +1,31 @@
+.arcade_wrapper {
+  width: 340px;
+  height: fit-content;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+  padding: 15px;
+
+  .gametype {
+    font-size: 14px;
+  }
+
+  .timer {
+    font-size: 24px;
+  }
+
+  .teamInfo {
+    text-align: center;
+  }
+
+  .teamname {
+    font-size: 14px;
+  }
+
+  .objective {
+    font-size: 24px;
+  }
+}

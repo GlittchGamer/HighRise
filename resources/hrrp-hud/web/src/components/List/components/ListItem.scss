@@ -1,0 +1,24 @@
+.listItem_wrapper {
+  background: var(--theme-palette-secondary-main);
+  border: none;
+  transition: background ease-in 0.15s;
+
+  &.clickable:hover {
+    background: var(--theme-palette-secondary-main);
+  }
+}
+
+.action {
+  font-size: 14px;
+  color: var(--theme-palette-secondary-main);
+  background: var(--theme-palette-secondary-main);
+}
+
+.phw {
+  pointer-events: none !important;
+}
+
+.ph {
+  font-size: 14px;
+  color: var(--theme-palette-secondary-main);
+}

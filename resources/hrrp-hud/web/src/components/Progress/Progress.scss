@@ -1,0 +1,20 @@
+.progress_wrapper {
+  width: 100%;
+  max-width: 500px;
+  height: fit-content;
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  .label {
+    color: var(--accent);
+    font-size: 18px;
+    text-shadow: 0 0 5px #000;
+  }
+
+  .progressbar {
+    transition: none !important;
+  }
+}

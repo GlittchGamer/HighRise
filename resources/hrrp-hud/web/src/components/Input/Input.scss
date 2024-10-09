@@ -1,0 +1,11 @@
+.input_wrapper {
+  .input {
+    &:first-of-type {
+      margin-top: 15px;
+    }
+
+    &:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+  }
+}

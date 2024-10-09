@@ -1,0 +1,30 @@
+.deathTexts_container {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  bottom: 150;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 24;
+  text-shadow: 0 0 3px #00000000;
+  text-align: center;
+
+  .highlight {
+    margin-left: 6;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .small {
+    display: block;
+    font-size: 16;
+    margin-left: 6;
+    color: var(--accent);
+  }
+
+  .smallHighlight {
+    color: var(--accent);
+    font-weight: bold;
+  }
+}

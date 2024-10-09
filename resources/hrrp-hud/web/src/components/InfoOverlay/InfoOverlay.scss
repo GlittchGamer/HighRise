@@ -1,0 +1,33 @@
+.InfoOverlay_wrapper {
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: calc(100% - 300px);
+  position: absolute;
+  top: 10px;
+  right: 0;
+  left: 0;
+  margin: auto;
+
+  .list {
+    padding-top: 0;
+    padding-bottom: 0;
+    max-height: 100%;
+    border: 1px solid #000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 6;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #000;
+      transition: background ease-in 0.15s;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #000;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #000;
+    }
+  }
+}

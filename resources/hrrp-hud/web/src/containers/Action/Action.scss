@@ -1,0 +1,48 @@
+.action_wrapper {
+  color: var(--accent);
+  text-shadow: 0 0 3px #000000;
+  border-bottom: 3px solid var(--accent);
+  padding: 10px;
+  height: fit-content;
+  position: absolute;
+  bottom: 15%;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: fit-content;
+  font-size: 20px;
+
+  & svg {
+    position: absolute;
+    left: -18px;
+    bottom: -15px;
+    color: white;
+    font-size: 28px;
+    z-index: 100;
+  }
+
+  .highlight {
+    color: #3aaaf9;
+    font-weight: 500;
+  }
+
+  .highlightSplit {
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .key {
+    padding: 5px;
+    color: var(--theme-palette-primary-main);
+    border-radius: 2px;
+    text-transform: capitalize;
+
+    &::before {
+      content: "(";
+    }
+
+    &::after {
+      content: ")";
+    }
+  }
+}

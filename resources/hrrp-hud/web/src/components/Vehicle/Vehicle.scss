@@ -1,0 +1,170 @@
+.mainText {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  margin: auto 0;
+  font-family: Segment7Standard;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  color: #f4e20f;
+  text-shadow: 0 0 5px rgb(244 15 15 / 65%);
+}
+
+.vehicle_wrapper {
+  // position: absolute;
+  // right: 0;
+  // width: fit-content;
+  // filter: drop-shadow(0 0 2px var(--theme-palette-secondary-dark) e0);
+  // font-size: 30px;
+  // color: var(--theme-palette-text-main);
+  // text-align: center;
+
+  .speedometer {
+    position: absolute;
+    right: 12vh;
+    bottom: 1vh;
+    width: 20vh;
+    height: 20vh;
+  }
+
+  .speedText {
+    font-size: 50px;
+    color: var(--theme-palette-text-main);
+    display: inline-block;
+    transition: color ease-in 0.15s;
+
+    .filler {
+      color: var(--theme-palette-text-alt);
+    }
+  }
+
+  .speedTextOff {
+    font-size: 50px;
+    color: var(--theme-palette-primary-main);
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  .speedMeasure {
+    font-size: 25px;
+    color: var(--theme-palette-text-alt);
+    margin-left: 10px;
+  }
+
+  .icons {
+    display: flex;
+    grid-gap: 0;
+    justify-content: center;
+  }
+
+  .seatbeltIcon {
+    font-size: 25px;
+    color: var(--theme-palette-warning-dark);
+    animation: flash linear 1s infinite;
+  }
+
+  .checkEngine {
+    margin: 0 30px;
+    font-size: 25px;
+    color: var(--theme-palette-warning-dark);
+    animation: flash linear 1s infinite;
+  }
+
+  .cruiseIcon {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-primary-main);
+  }
+
+  .fuel100 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-success-dark);
+  }
+
+  .fuel75 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-success-main);
+  }
+
+  .fuel50 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-warning-main);
+  }
+
+  .fuel25 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-error-main);
+    animation: flash linear 1.5s infinite;
+  }
+
+  .fuel10 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-error-main);
+    animation: flash linear 1s infinite;
+  }
+
+  .fuel0 {
+    margin: 0 15px;
+    font-size: 25px;
+    color: var(--theme-palette-error-main);
+    animation: flash linear 0.5s infinite;
+  }
+
+  .iconWrapper {
+    position: relative;
+    height: 50px;
+    width: 50px;
+
+    &.low {
+      animation: flash linear 0.5s infinite;
+    }
+  }
+
+  .iconProg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 5;
+  }
+
+  .iconAvatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: var(--theme-palette-secondary-dark);
+
+    & svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      color: var(--theme-palette-text-main);
+    }
+  }
+
+  @keyframes flash {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

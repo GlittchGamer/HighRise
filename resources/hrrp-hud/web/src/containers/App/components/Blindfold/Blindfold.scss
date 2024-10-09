@@ -1,0 +1,16 @@
+.blindfold_wrapper {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000000e6;
+  background-image: url("/assets/blindfold.webp");
+  background-size: cover;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  opacity: 0.99;
+}

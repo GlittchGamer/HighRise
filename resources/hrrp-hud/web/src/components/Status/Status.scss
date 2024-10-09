@@ -1,0 +1,183 @@
+.hud_wrapper {
+  .talkingIcon {
+    position: absolute;
+    bottom: 12vh;
+    right: 5vh;
+    font-size: 3vh;
+    color: var(--accent);
+    text-shadow: 0 0 2px var(--accent);
+  }
+  .audioRangeBar {
+    border: 1px solid rgba(165, 165, 165, 0.582);
+    background-color: rgba(39, 39, 39, 0.664);
+    box-shadow: 0 0 2px rgba(39, 39, 39, 0.664);
+    border-radius: 0.1vh;
+  }
+  .audioBarActive {
+    background-color: var(--accent);
+    box-shadow: 0 0 2px var(--accent);
+    border-radius: 0.1vh;
+  }
+  .audioRangWrapper {
+    width: 5vh;
+    height: 0.5vh;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 0.5vh;
+  }
+  .audioBar {
+    display: block;
+    position: relative;
+    height: 20%;
+    width: 5px;
+    border-radius: 0.1vh;
+    background-color: rgba(39, 39, 39, 0.664);
+    box-shadow: 0 0 2px rgba(39, 39, 39, 0.664);
+  }
+  .audioTalking {
+    background-color: var(--accent);
+    box-shadow: 0 0 2px var(--accent);
+    animation: audioPlaying 1s linear infinite;
+  }
+  .audioRadio {
+    background-color: #2489db;
+    box-shadow: 0 0 2px #2489db;
+    animation: audioPlaying 1s linear infinite;
+  }
+  .audioBarsWrapper {
+    height: 50px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .barIcon {
+    position: absolute;
+    font-size: 2vh;
+    right: 0vh;
+    width: 3.2vh;
+    top: 0.5vh;
+    text-align: center;
+  }
+  .statBar {
+    position: absolute;
+    bottom: 0vh;
+    width: 100%;
+    height: 50%;
+    background-color: rgb(139, 91, 252);
+    box-shadow: 0 0 0.5vh rgb(139, 91, 252);
+  }
+  .statBarBase {
+    position: absolute;
+    width: 0.4vh;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .stat {
+    position: relative;
+    height: 3vh;
+  }
+  .statWrapper {
+    position: absolute;
+    top: 50%;
+    left: 31vh;
+    width: 17vh;
+    height: auto;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 0.5vh;
+  }
+  .barWrapper {
+    // position: relative;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    .barTxt {
+      color: var(--accent);
+      text-shadow: 1px 1px black;
+    }
+    .barBase {
+      width: 100%;
+      height: 0.75vh;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+  .icon {
+    color: rgba(255, 255, 255, 0.815);
+  }
+  .plainbar {
+    position: relative;
+    height: 100%;
+    transition: 200ms;
+  }
+  .healthbar {
+    position: relative;
+    height: 100%;
+    background-color: #3dc044;
+    // box-shadow: 0 0 0.5vh var(--accent);
+    transition: 200ms;
+  }
+  .armorbar {
+    position: relative;
+    height: 100%;
+    background-color: #5045b0;
+    // box-shadow: 0 0 0.5vh #2489db;
+    transition: 200ms;
+  }
+  .wasteWrapper {
+    position: absolute;
+    top: 0vh;
+    left: 0vh;
+    width: 100%;
+    height: auto;
+  }
+  .barsWrapper {
+    position: absolute;
+    bottom: 4vh;
+    left: 5vh;
+    width: 28vh;
+    height: auto;
+  }
+  .leftDiv {
+    position: absolute;
+    top: 5vh;
+    left: 0vh;
+    width: 50%;
+    height: 90%;
+    transform: perspective(450px) rotateY(2.5deg);
+  }
+  .rightDiv {
+    position: absolute;
+    top: 5vh;
+    right: 0vh;
+    width: 50%;
+    height: 90%;
+    transform: perspective(450px) rotateY(-2.5deg);
+  }
+  @keyframes audioPlaying {
+    0% {
+      height: 20%;
+    }
+    50% {
+      height: 100%;
+    }
+    100% {
+      height: 20%;
+    }
+  }
+  .audioBar:nth-child(2) {
+    animation-delay: 0.6s;
+  }
+  .audioBar:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .audioBar:nth-child(4) {
+    animation-delay: 0.5s;
+  }
+  .audioBar:nth-child(5) {
+    animation-delay: 0.8s;
+  }
+  .audioBar:nth-child(6) {
+    animation-delay: 0.3s;
+  }
+}

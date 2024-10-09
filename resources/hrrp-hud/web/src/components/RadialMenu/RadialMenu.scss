@@ -1,0 +1,43 @@
+.div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.slice {
+  cursor: pointer;
+}
+
+.label {
+  font-size: 0.75rem;
+}
+
+.back {
+  position: absolute;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  top: 50%;
+  width: calc(5vw);
+  height: calc(5vw);
+  border-radius: 50%;
+  background: var(--theme-palette-secondary-main) cc;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: 2px solid var(--theme-palette-secondary-main);
+  transition: background 0.2s ease-out;
+
+  &:hover {
+    background: var(--theme-palette-secondary-main);
+  }
+}
