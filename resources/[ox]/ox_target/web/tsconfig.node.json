@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "types": ["vite-plugin-svgr/client"]
+  },
+  "include": ["vite.config.ts"]
+}
