@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #ff0039;
+  line-height: 1.5;
+  font-weight: 400;
+  /* color-scheme: dark; */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Pricedown';
+  src: url('/fonts/pricedown.ttf');
+}
+
+@font-face {
+  font-family: 'LCD';
+  src: url('/fonts/LCD.ttf');
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Geist-Black';
+  src: url('/fonts/Geist-Black.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Segment7Standard';
+  src: url('/fonts/Segment7Standard.otf') format('truetype');
+}
+
+body {
+  background: transparent !important;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden !important;
+  font-family: 'Geist-Black', sans-serif;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* * {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
