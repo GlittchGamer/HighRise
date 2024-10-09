@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhrrp_phone=self.webpackChunkhrrp_phone||[]).push([[3205],{93205:(e,l,o)=>{o.r(l),o.d(l,{Categories:()=>h});var r=o(878),a=o(69122),c=o(52253),p=o(92629),h=[{label:"Services",color:r.A[500]},{label:"Want-To-Buy",color:a.A[500]},{label:"Want-To-Sell",color:c.A[500]},{label:"Help Wanted",color:p.A[500]}]}}]);
