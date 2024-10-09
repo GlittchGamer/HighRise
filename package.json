@@ -1,0 +1,25 @@
+{
+  "name": "highriserp",
+  "version": "1.0.0",
+  "description": "HighRiseRP Package Manager",
+  "data": {
+    "serverVersion": "9780",
+    "concurrencyFiles": 70
+  },
+  "scripts": {
+    "start:dev": ".\\artifacts\\%npm_package_data_serverVersion%\\FXServer.exe +exec \"./server.cfg\" +set onesync on +setr sv_environment debug",
+    "migrate": "npx prisma migrate dev",
+    "wipe:db": "npx prisma db push --force-reset && npx prisma db push"
+  },
+  "author": "Stroudy",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "prisma": "^5.19.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@prisma/client": "5.19.1"
+  }
+}
