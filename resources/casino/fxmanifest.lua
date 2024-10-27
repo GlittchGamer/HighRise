@@ -1,0 +1,21 @@
+fx_version 'cerulean'
+games { 'gta5' }
+lua54 'yes'
+client_script "@core/components/modules/error/cl_error.lua"
+client_script "@pwnzor/client/check.lua"
+server_script "@oxmysql/lib/MySQL.lua"
+
+author 'Dr Nick'
+version 'v1.0.0'
+url 'https://www.mythicrp.com'
+
+server_scripts {
+  'config/**/*.lua',
+  'shared/**/*.lua',
+  'server/**/*.lua',
+}
+
+client_scripts {
+  'shared/**/*.lua',
+  'client/**/*.lua',
+}

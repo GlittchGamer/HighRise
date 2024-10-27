@@ -43,10 +43,10 @@ files {
   'client/framework/ox.lua',
   'client/framework/esx.lua',
   'client/framework/qb.lua',
-  'client/framework/hrrp.lua',
+  'client/framework/plugged.lua',
   'client/compat/qtarget.lua',
   'client/compat/qb-target.lua',
-  'client/compat/hrrp-targeting.lua',
+  'client/compat/targeting.lua',
 }
 
 provide 'qtarget'

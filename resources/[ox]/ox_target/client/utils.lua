@@ -268,7 +268,7 @@ function utils.hasPlayerGotGroup(filter)
     return true
 end
 
-require 'client.framework.hrrp'
+require 'client.framework.plugged'
 
 function utils.warn(msg)
     local trace = Citizen.InvokeNative(`FORMAT_STACK_TRACE` & 0xFFFFFFFF, nil, 0, Citizen.ResultAsString())

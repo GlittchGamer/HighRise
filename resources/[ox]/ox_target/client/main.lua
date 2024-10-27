@@ -40,7 +40,7 @@ require 'client.debug'
 require 'client.defaults'
 require 'client.compat.qtarget'
 require 'client.compat.qb-target'
-require 'client.compat.hrrp-targeting'
+require 'client.compat.targeting'
 
 local objRefresh = 300
 local raycastFromCamera, getNearbyZones, drawZoneSprites, refreshObjectSprites in utils
@@ -182,7 +182,7 @@ local function shouldHide(option, distance, endCoords, entityHit, entityType, en
     end
 
     if option.canInteract then
-        if option.hrrptarget then
+        if option.target then
             local entData = { entity = entityHit, distance = distance, endCoords = endCoords, text = option.name, boneIndex = bone }
             if entityHit ~= 0 and entityType == 1 and IsPedAPlayer(entityHit) then
                 entData.serverId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit))
@@ -603,7 +603,7 @@ RegisterNUICallback('select', function(data, cb)
             state.setActive(false)
         end
 
-        if option.hrrptarget then
+        if option.target then
             local response = getResponse(option, option.serverEvent ~= nil)
             response.menu = {
                 option

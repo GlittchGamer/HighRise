@@ -1,0 +1,10 @@
+RegisterNUICallback("LEOPin", function(data, cb)
+	cb(true)
+	SetNewWaypoint(data.x, data.y)
+end)
+
+RegisterNUICallback("SearchPeople", function(data, cb)
+	exports['core']:CallbacksServer("Phone:LEOAsist:SearchPeople", data, function(res)
+		cb(res)
+	end)
+end)

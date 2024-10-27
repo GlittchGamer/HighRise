@@ -20,7 +20,7 @@ export interface Interact {
     icon: IconName;
     label: string;
     minDist: number;
-    hrrptarget: boolean;
+    target: boolean;
     realName: string;
     resource: string;
     text?: string;
@@ -37,7 +37,7 @@ export interface IZones {
     distance: number;
     realName: string;
     icon: IconName;
-    hrrptarget: boolean;
+    target: boolean;
     event: string;
     label: string;
     data: {
@@ -83,7 +83,7 @@ export interface IZones {
       reqDuty: boolean;
     };
     icon: IconName;
-    hrrptarget: boolean;
+    target: boolean;
     distance: number;
     mainIcon: IconName;
   };
@@ -101,7 +101,7 @@ NUI.Emulate({
           icon: 'face-mask',
           label: 'Scratch Vin',
           minDist: 2,
-          hrrptarget: true,
+          target: true,
           realName: 'Scratch Vin',
           resource: 'prp-base',
           text: 'Scratch Vin',
@@ -114,7 +114,7 @@ NUI.Emulate({
           icon: 'gas-pump',
           label: 'Fuel zafafifa',
           minDist: 2,
-          hrrptarget: true,
+          target: true,
           realName: 'prp-base_cb_2',
           resource: 'prp-base',
         },
@@ -126,7 +126,7 @@ NUI.Emulate({
           icon: 'gas-pump',
           label: 'Refuel With Petrol Can',
           minDist: 2,
-          hrrptarget: true,
+          target: true,
           realName: 'Refuel With Petrol Can',
           resource: 'prp-base',
           text: 'Refuel With Petrol Can',
@@ -139,7 +139,7 @@ NUI.Emulate({
           icon: 'garage-open',
           label: 'Store Vehicle',
           minDist: 4,
-          hrrptarget: true,
+          target: true,
           realName: 'Store Vehicle',
           resource: 'prp-base',
           text: 'Store Vehicle',
@@ -153,7 +153,7 @@ NUI.Emulate({
           distance: 2,
           realName: 'Make Parts',
           icon: 'toolbox',
-          hrrptarget: true,
+          target: true,
           event: 'Crafting:Client:OpenCrafting',
           label: 'Make Parts',
           data: {
@@ -199,7 +199,7 @@ NUI.Emulate({
             reqDuty: true,
           },
           icon: 'toolbox',
-          hrrptarget: true,
+          target: true,
           distance: 2,
           mainIcon: 'toolbox',
         },

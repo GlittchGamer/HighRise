@@ -1,0 +1,17 @@
+RegisterNUICallback("CreateContact", function(data, cb)
+	exports['core']:CallbacksServer("Phone:Contacts:Create", data, function(nId)
+		cb(nId)
+	end)
+end)
+
+RegisterNUICallback("UpdateContact", function(data, cb)
+	exports['core']:CallbacksServer("Phone:Contacts:Update", data, function(status)
+		cb(status)
+	end)
+end)
+
+RegisterNUICallback("DeleteContact", function(data, cb)
+	exports['core']:CallbacksServer("Phone:Contacts:Delete", data, function(status)
+		cb(status)
+	end)
+end)

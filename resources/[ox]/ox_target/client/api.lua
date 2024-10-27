@@ -133,7 +133,7 @@ local function removeTarget(target, remove, resource)
   end
 end
 
-function api.removeHrrpTargets()
+function api.removeTargets()
 
 end
 

@@ -1,0 +1,286 @@
+CRAFTING = {
+  Benches = {
+    Open = function(self, bench)
+      exports['core']:CallbacksServer("Crafting:GetBenchDetails", bench, function(results)
+        if results == nil then
+          return
+        else
+          LocalPlayer.state.craftingOpen = true
+          SendNUIMessage({
+            type = "SET_BENCH",
+            data = {
+              bench = bench,
+              cooldowns = results.cooldowns,
+              actionString = results.string,
+              recipes = results.recipes,
+              myCounts = results.myCounts,
+            },
+          })
+          SendNUIMessage({
+            type = "SET_MODE",
+            data = {
+              mode = "crafting",
+            },
+          })
+          SetNuiFocus(true, true)
+          SendNUIMessage({
+            type = "APP_SHOW",
+          })
+        end
+      end)
+    end,
+    Cleanup = function(self)
+      for k, v in ipairs(_benchObjs) do
+        exports['ox_target']:TargetingRemoveEntity(v)
+        DeleteEntity(v)
+      end
+      _benchObjs = {}
+    end,
+    Refresh = function(self, interior)
+      self:Cleanup()
+
+      for k, v in ipairs(_benches) do
+        if v.targeting and not v.targeting.manual then
+          if
+              v.restrictions.interior == nil
+              or v.restrictions.interior
+              == GlobalState[string.format("%s:Property", LocalPlayer.state.ID)]
+          then
+            local obj = nil
+            if v.targeting.model ~= nil then
+              obj = CreateObject(
+                GetHashKey(v.targeting.model),
+                v.location.x,
+                v.location.y,
+                v.location.z,
+                false,
+                true,
+                false
+              )
+              FreezeEntityPosition(obj, true)
+              table.insert(_benchObjs, obj)
+              SetEntityHeading(obj, v.location.h)
+            end
+
+            if
+                v.restrictions.shared
+                or (v.restrictions.char ~= nil and v.restrictions.char == LocalPlayer.state.Character:GetData(
+                  "SID"
+                ))
+                or (v.restrictions.job ~= nil and exports['jobs']:JobsPermissionsHasJob(
+                  v.restrictions.job.id,
+                  v.restrictions.job.workplace,
+                  v.restrictions.job.grade,
+                  false,
+                  false,
+                  v.restrictions.job.permissionKey or "JOB_CRAFTING"
+                ))
+                or (
+                  v.restrictions.rep ~= nil
+                  and Reputation:GetLevel(v.restrictions.rep.id) >= v.restrictions.rep.level
+                )
+            then
+              local menu = {
+                icon = v.targeting.icon,
+                text = v.label,
+                event = "Crafting:Client:OpenCrafting",
+                data = v,
+              }
+
+              if v.canUseSchematics then
+                table.insert(menu, {
+                  icon = "memo-circle-check",
+                  text = "Add Schematic To Bench",
+                  event = "Crafting:Client:AddSchematic",
+                  data = v,
+                  isEnabled = function(data, entityData)
+                    return Inventory.Items:HasType(17, 1)
+                  end,
+                })
+              end
+
+              if v.restrictions.job ~= nil then
+                menu.jobPerms = {
+                  {
+                    job = v.restrictions.job.id,
+                    workplace = v.restrictions.job.workplace,
+                    reqDuty = v.restrictions.job.onDuty,
+                  },
+                }
+              end
+
+              if obj ~= nil then
+                -- exports['ox_target']:TargetingAddEntity(obj, v.targeting.icon, menu)
+                print("This is broke", obj, v.targeting.icon, menu)
+              elseif v.targeting.ped ~= nil then
+                exports['pedinteraction']:Add(
+                  v.id,
+                  GetHashKey(v.targeting.ped.model),
+                  vector3(v.location.x, v.location.y, v.location.z),
+                  v.location.h,
+                  25.0,
+                  menu,
+                  v.targeting.icon,
+                  v.targeting.ped.task
+                )
+              elseif v.targeting.poly ~= nil then
+                exports['ox_target']:TargetingZonesAddBox(
+                  v.id,
+                  v.targeting.icon,
+                  v.targeting.poly.coords,
+                  v.targeting.poly.w,
+                  v.targeting.poly.l,
+                  v.targeting.poly.options,
+                  {
+                    menu
+                  },
+                  2.0,
+                  true
+                )
+              end
+            end
+          end
+        end
+      end
+    end,
+  },
+}
+
+_benchObjs = {}
+_benches = nil
+RegisterNetEvent("Crafting:Client:CreateBenches", function(benches)
+  _benches = benches
+  Crafting.Benches:Refresh(nil)
+end)
+
+RegisterNetEvent("Crafting:Client:ForceBenchRefresh", function()
+  Crafting.Benches:Refresh(nil)
+end)
+
+RegisterNetEvent("Characters:Client:Logout", function()
+  Crafting.Benches:Cleanup()
+end)
+
+AddEventHandler("Crafting:Client:OpenCrafting", function(ent, data)
+  Crafting.Benches:Open(data.id)
+end)
+
+AddEventHandler("Crafting:Client:AddSchematic", function(ent, data)
+  exports['core']:CallbacksServer("Crafting:GetSchematics", data, function(schematics)
+    if #schematics > 0 then
+      for k, v in ipairs(schematics) do
+        schematics[k].data = {
+          bench = data.id,
+          schematic = schematics[k].data,
+        }
+      end
+
+      ListMenu:Show({
+        main = {
+          label = "Crafting Schematics",
+          items = schematics,
+        },
+      })
+    else
+      exports['hud']:NotificationError("You Have No Schematics")
+    end
+  end)
+end)
+
+AddEventHandler("Crafting:Client:UseSchematic", function(data)
+  Progress:Progress({
+    name = "schematic_action",
+    duration = 8000,
+    label = "Using Schematic",
+    useWhileDead = false,
+    canCancel = true,
+    ignoreModifier = true,
+    controlDisables = {
+      disableMovement = true,
+      disableCarMovement = true,
+      disableMouse = false,
+      disableCombat = true,
+    },
+  }, function(cancelled)
+    if not cancelled then
+      exports['core']:CallbacksServer("Crafting:UseSchematic", data, function(s)
+
+      end)
+    end
+  end)
+end)
+
+AddEventHandler("Proxy:Shared:RegisterReady", function()
+  exports['core']:RegisterComponent("Crafting", CRAFTING)
+end)
+
+RegisterNUICallback("Crafting:Craft", function(data, cb)
+  exports['core']:CallbacksServer("Crafting:Craft", data, function(state)
+    if not state.error then
+      if state.data.time > 0 then
+        LocalPlayer.state.crafting = true
+        Progress:Progress({
+          name = "crafting_action",
+          duration = state.data.time - 1000,
+          label = string.format("%s: %s", state.string or "Crafting", _items[state.data.result.name].label),
+          useWhileDead = false,
+          canCancel = false,
+          ignoreModifier = true,
+          controlDisables = {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+          },
+        }, function(cancelled)
+          if cancelled then
+            exports['core']:CallbacksServer("Crafting:Cancel", {}, function(s)
+              if s then
+                SendNUIMessage({
+                  type = "END_CRAFTING",
+                })
+              end
+              LocalPlayer.state.crafting = false
+            end)
+          end
+        end)
+        if state.data ~= nil then
+          exports["animations"]:EmotesPlay(state.data.animation, true, state.data.time, true)
+        end
+      end
+      cb(true)
+    else
+      exports['hud']:NotificationError(string.format("Error - %s", state.message or "Something Is Broken, Report This"))
+      cb(false)
+    end
+  end)
+end)
+
+RegisterNUICallback("Crafting:End", function(data, cb)
+  cb("OK")
+  exports['core']:CallbacksServer("Crafting:End", {}, function(state)
+    SendNUIMessage({
+      type = "END_CRAFTING",
+    })
+    exports["animations"]:EmotesForceCancel()
+    if state ~= nil then
+      if LocalPlayer.state.craftingOpen then
+        Crafting.Benches:Open(state) -- Refresh bench bcuz item counts
+      end
+    end
+    LocalPlayer.state.crafting = false
+  end)
+end)
+
+RegisterNUICallback("Crafting:Cancel", function(data, cb)
+  exports['core']:CallbacksServer("Crafting:Cancel", {}, function(state)
+    cb(state)
+    if state then
+      Progress:Cancel(true)
+      exports["animations"]:EmotesForceCancel()
+    end
+    LocalPlayer.state.crafting = false
+  end)
+end)
+
+function RegisterBenches() end

@@ -62,8 +62,8 @@ end
 RegisterNetEvent("Ped:Server:SendCash") -- Needs Testing
 AddEventHandler("Ped:Server:SendCash", function(amount, targetServerId)
   local source = source
-  local char = exports['hrrp-base']:FetchSource(source)
-  local targetChar = exports['hrrp-base']:FetchSID(targetServerId):GetData("Character")
+  local char = exports['core']:FetchSource(source)
+  local targetChar = exports['core']:FetchSID(targetServerId):GetData("Character")
 
   if char ~= nil and targetChar ~= nil then
     local playerCoords = GetEntityCoords(GetPlayerPed(source))
@@ -72,24 +72,24 @@ AddEventHandler("Ped:Server:SendCash", function(amount, targetServerId)
     if #(playerCoords - targetCoords) <= 5.0 then
       local amount = math.tointeger(amount)
       if amount and amount > 0 then
-        if exports['hrrp-finance']:WalletModify(source, -amount, true) then
-          if exports['hrrp-finance']:WalletModify(targetChar:GetData("Source"), amount, true) then
-            exports['hrrp-base']:ExecuteClient(source, "Notification", "Success", "You Gave $" .. formatNumberToCurrency(amount) .. " in Cash")
-            exports['hrrp-base']:ExecuteClient(targetChar:GetData("Source"), "Notification", "Success",
+        if exports['finance']:WalletModify(source, -amount, true) then
+          if exports['finance']:WalletModify(targetChar:GetData("Source"), amount, true) then
+            exports['core']:ExecuteClient(source, "Notification", "Success", "You Gave $" .. formatNumberToCurrency(amount) .. " in Cash")
+            exports['core']:ExecuteClient(targetChar:GetData("Source"), "Notification", "Success",
               "You Just Received $" .. formatNumberToCurrency(amount) .. " in Cash")
           else
-            exports['hrrp-base']:ExecuteClient(source, "Notification", "Error", "Transaction Failed")
+            exports['core']:ExecuteClient(source, "Notification", "Error", "Transaction Failed")
           end
         else
-          exports['hrrp-base']:ExecuteClient(source, "Notification", "Error", "Not Enough Cash")
+          exports['core']:ExecuteClient(source, "Notification", "Error", "Not Enough Cash")
         end
       else
-        exports['hrrp-base']:ExecuteClient(source, "Notification", "Error", "Invalid Amount")
+        exports['core']:ExecuteClient(source, "Notification", "Error", "Invalid Amount")
       end
     else
-      exports['hrrp-base']:ExecuteClient(source, "Notification", "Error", "Target Not Nearby")
+      exports['core']:ExecuteClient(source, "Notification", "Error", "Target Not Nearby")
     end
   else
-    exports['hrrp-base']:ExecuteClient(source, "Notification", "Error", "Character Data Not Found")
+    exports['core']:ExecuteClient(source, "Notification", "Error", "Character Data Not Found")
   end
 end) -- Needs Testing
