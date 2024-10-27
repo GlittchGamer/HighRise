@@ -80,7 +80,7 @@ const Splash = (props) => {
 			<img className={classes.img} src={logo} />
 			<div className={classes.innerBody}>
 				<span className={classes.splashHeader}>
-					Welcome To <span className={classes.splashBranding}>HighRise RP</span>
+					Welcome To <span className={classes.splashBranding}>PluggedRP</span>
 				</span>
 				<span
 					className={classes.splashTip}

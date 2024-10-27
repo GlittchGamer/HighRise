@@ -1,0 +1,1 @@
+{"version":3,"file":"client.js","mappings":";AAAA;AACA;AACA,CAAC","sources":["webpack://cool-boilerplate/./src/client/client.ts"],"sourcesContent":["RegisterCommand('tw', () => {\r\n    TriggerServerEvent(\"add\");\r\n}, false);\r\n"],"names":[],"sourceRoot":""}

@@ -31,10 +31,10 @@ export default () => {
 		},
 		palette: {
 			primary: {
-				main: '#8a0000',
-				light: '#ff2100',
-				dark: '#560000',
-				contrastText: '#ffffff',
+				main: '#0099fa',
+                light: '#4CB7FB',
+                dark: '#3C92C8',
+                contrastText: '#ffffff',
 			},
 			secondary: {
 				main: '#141414',

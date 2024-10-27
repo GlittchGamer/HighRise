@@ -25,7 +25,6 @@ setupEvent = AddEventHandler("Core:Shared:Ready", function()
     "Notification",
     "Hud",
     "Status",
-    --"Hospital",
     "Progress",
     "EmergencyAlerts",
     "PedInteraction",
