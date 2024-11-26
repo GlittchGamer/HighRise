@@ -1,5 +1,7 @@
 # HighRiseRP
 
+** calling my 1 year old daughter a smackhead lmao i won the rights i did 95% of the sql convert ** your welcome 
+
 # Server Functionality
 
 **Exports (Components)**
