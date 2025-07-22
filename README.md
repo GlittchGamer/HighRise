@@ -1,6 +1,5 @@
 # HighRiseRP
 
-**calling my 1 year old daughter a smackhead lmao i own the sql rights i did 95% of the sql convert** your welcome 
 
 # Server Functionality
 
